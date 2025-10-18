@@ -2,8 +2,6 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from pages.main_page import MainPage
-
 
 def pytest_addoption(parser):
     parser.addoption('--language', action='store', default="en",
@@ -19,17 +17,7 @@ def browser(request):
     browser = webdriver.Chrome(options=options)
     print("\nstart chrome browser for test..")
 
-    yield browser, language
+    yield browser
 
     print("\nquit browser..")
     browser.quit()
-
-
-@pytest.fixture(scope="function")
-def main_page(browser):
-    browser, language = browser
-    link = "http://selenium1py.pythonanywhere.com/"
-    browser.get(link)
-    page = MainPage(browser, link)
-    page.open_page()
-    yield page
